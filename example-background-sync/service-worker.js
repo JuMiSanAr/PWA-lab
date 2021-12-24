@@ -57,13 +57,6 @@ self.addEventListener("sync", (event)=> {
     }
 })
 
-
-
-// Make browser load only cached files
-// self.addEventListener('fetch', function (event) {
-//   event.respondWith(caches.match(event.request));
-// });
-
 // Make browser load cached files first and fall back to network only if they're not found
 self.addEventListener('fetch', (e) => {
   e.respondWith((async () => {
@@ -77,22 +70,6 @@ self.addEventListener('fetch', (e) => {
     
     // Otherwise, fetch the resource using the network
     const response = await fetch(e.request);
-
-    // TO REFETCH AFTER CLEARING CACHE (not working as expected):
-    // const split_request = e.request.url.split("/")
-    // const file_name = './' + split_request[split_request.length - 1]
-    
-    // if (filesToCache.includes(file_name)) {      
-    //   const cache = await caches.open(cache_name);
-    //   console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
-    //   cache.put(e.request, response.clone())
-    //   // .then(() => {        
-    //   //   caches.match(e.request.url).then((r) => {
-    //   //     return r
-    //   //   })
-    //   // });
-    // }
-
     return response;
   })());
 });
@@ -115,11 +92,3 @@ self.addEventListener('message', function (event) {
     }));
   }
 });
-
-// TOOD: 
-// measure performance of indexeddb vs localstorage
-// (generate 2k about records with images and compare loading speed)
-// add reports in related cards
-
-// look for articles about storage pros and cons, e.g.:
-// https://blog.bitsrc.io/browser-storage-options-and-their-state-in-2021-6808b949087a

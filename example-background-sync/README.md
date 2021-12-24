@@ -6,6 +6,12 @@ In this example we use IndexedDB and a service worker to:
 
 In addition, we have a simple online / offline indicator in the form of a green / red circle.
 
+# Register service worker
+
+To register the service worker, we only need to add it in our main page (index.html) as shown. 
+
+IMPORTANT: The service worker has a scope, and ideally needs to be placed at the root of the app to cover all of its files (it should correspond to the "start_url" in the manifest file). More info [here](https://developers.google.com/web/ilt/pwa/introduction-to-service-worker#registration_and_scope).
+
 # Background-sync
 
 The first time the app is loaded, the service worker (service-worker.js) is installed. It caches the files specified in the variable "filesToCache" and stores them in cache under the name in "cache_name".
@@ -19,7 +25,7 @@ However, if there's no connection, the .catch event will be triggered and we wil
 ## Storing and retrieving data offline
 ### Storing data in the DB
 
-Steps to interact with IndexedDB (taken from [here](https://www.youtube.com/watch?v=g4U5WRzHitM)):
+Standard steps to interact with IndexedDB:
 - Open DB
 - Create / retrieve object store in DB
 - Perform transactions
@@ -46,3 +52,4 @@ The online indicator simply uses navigator.onLine and a listener on online / off
 
 - Delete indexedDB entries once they're synced.
 - The online indicator goes online on page refresh, even though there's no connection. In a VueJS app, an update should be triggered on mounted().
+- Test performance (indexedDB vs other storages)
